@@ -142,7 +142,7 @@
         
 
         function display_info(taxon_key) {
-            $.get("http://api.gbif.org/v1/species/" + taxon_key , 
+            $.get("https://api.gbif.org/v1/species/" + taxon_key , 
             function( data ) { 
 
                 $('#info-panel').html(
@@ -190,7 +190,7 @@
             </div>
         `;
         function display_images(taxon_key) {
-            $.get("http://api.gbif.org/v1/occurrence/search?taxonKey=" + taxon_key + "&mediaType=StillImage", 
+            $.get("https://api.gbif.org/v1/occurrence/search?taxonKey=" + taxon_key + "&mediaType=StillImage", 
             function( data ) {
                 tousmedias = data.results.reduce(function(prev, curr) {
                     mediums = []
