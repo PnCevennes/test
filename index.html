@@ -96,7 +96,7 @@
             return $.ajax( endpointUrl, settings ).then( doneCallback );
         }
 
-        const endpointUrl = 'http://query.wikidata.org/sparql';
+        const endpointUrl = 'https://query.wikidata.org/sparql';
         const sparqlQuery = (cd_ref) => `SELECT *\n
                 WHERE {\n
                     ?object wdt:P3186 '${cd_ref}'.\n
