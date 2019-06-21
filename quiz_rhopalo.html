@@ -1,0 +1,223 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<style>
+.text-block {
+    min-width: 100px;
+    min-height: 35px;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid black;
+}
+.previews .thumbnail {
+    text-align: center;
+      height: 300px;
+  }
+  .img-ok {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50px;
+  }
+  .r-img{
+    height: 200px;
+  }
+</style>
+<script>
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+
+function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function drop(ev) {
+    ev.preventDefault();
+    var data = ev.dataTransfer.getData("text");
+    ev.target.appendChild(document.getElementById(data));
+
+    //Affichage vignette ok - not ok
+    var elImg = document.getElementsByClassName('img-ok')
+    Array.prototype.forEach.call(elImg, function(el) {
+        var rid = el.id.split('-')[1];
+        if ($('#t-' +rid).children().length<=0){
+          el.src = '';
+        } else if ($('#t-' +rid).children()[0].id != rid) {
+          el.src = srcImgNoOk;
+        }
+    });
+    if (ev.target.getAttribute('id') == 't-' + data) {
+      $('#ok-'+ data).attr("src",srcImgOk);
+    }
+    else {
+      $('#ok-'+ev.target.getAttribute('id').split('-')[1]).attr("src",srcImgNoOk);
+    }
+}
+var srcImgOk = "https://openclipart.org/image/300px/svg_to_png/161503/OK-1.png";
+var srcImgNoOk = "https://openclipart.org/image/300px/svg_to_png/161515/OK-2.png";
+var quizdata = {
+  "cvo": {
+    "img":"http://www.insectesduhautjura.fr/_media/img/medium/cuivre-de-la-verge-dor-male-lycaenidae-lycaena-31-juillet-2011-1.jpg",
+    "response":"cvo"
+  },
+  "dd": {
+    "img":"https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Schachbrett%2C_f_%28Melanargia_galathea%29_0606.jpg/220px-Schachbrett%2C_f_%28Melanargia_galathea%29_0606.jpg",
+    "response":"dd"
+  },
+  "mc": {
+    "img":"https://images.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.jbnature.com%2Fimages%2Fstories%2FSTinsectes%2FSTpapillonsdiurnes%2FSTnacres%2FSTmoyennacre%2Fmoyen%2520nacre-060913-062x6.jpg&f=1",
+    "response":"mc"
+  },
+  "moircanche": {
+    "img":"http://www.guypadfield.com/valimages2007/epiphronV71.jpg",
+    "response":"moircanche"
+  },
+  "azc" :{
+    "img":"https://images.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.european-lepidopteres.fr%2FIMG%2Fjpg%2FPolyommatus_icarus54.jpg&f=1",
+    "response":"azc"
+  },
+  "cephale": {
+    "img":"https://images.duckduckgo.com/iu/?u=http%3A%2F%2Fc1.staticflickr.com%2F7%2F6153%2F6215269392_aa0110a2b1.jpg&f=1",
+    "response":"cephale"
+  },
+  "hepdactyle": {
+    "img":"https://images.duckduckgo.com/iu/?u=http%3A%2F%2F3.bp.blogspot.com%2F-iJo_4spOLBM%2FTZBIAAYV1wI%2FAAAAAAAAABw%2FIe1YP1euJxI%2Fs1600%2FEssex%2BSkipper%2B-%2BThymelicus%2Blineola.jpg&f=1",
+    "response":"hepdactyle"
+  },
+  "tircis": {
+    "img":"http://www.learnaboutbutterflies.com/Pararge%20aegeria%202116-001a.jpg",
+    "response":"tircis"
+  }
+}
+</script>
+</head>
+<body>
+  <div class="container">
+    <div class="row home-intro text-center">
+      <div class="col-lg-12">
+        <h2 class="tagline">Qui est Qui?</h2>
+        <p class="lead">
+          Fait glisser le texte sur la bonne image
+        </p>
+        <hr class="small">
+      </div>
+    </div>
+
+      <div class="col-lg-2">
+        <div class="text-block" ondrop="drop(event)" ondragover="allowDrop(event)">
+          <p draggable="true" ondragstart="drag(event)" id="dd" >Demi deuil</p>
+        </div>
+        <div class="text-block" ondrop="drop(event)" ondragover="allowDrop(event)">
+          <p draggable="true" ondragstart="drag(event)" id="azc" >Azuré commun</p>
+        </div>
+          <div class="text-block"  ondrop="drop(event)" ondragover="allowDrop(event)">
+            <p draggable="true" ondragstart="drag(event)" id="cvo" >Cuivré de la verge d'or</p>
+          </div>
+        <div class="text-block" ondrop="drop(event)" ondragover="allowDrop(event)">
+          <p draggable="true" ondragstart="drag(event)" id="cephale" >Céphale</p>
+        </div>
+        <div class="text-block" ondrop="drop(event)" ondragover="allowDrop(event)">
+          <p draggable="true" ondragstart="drag(event)" id="hepdactyle" >Hespérie du dactyle</p>
+        </div>
+        <div class="text-block" ondrop="drop(event)" ondragover="allowDrop(event)">
+          <p draggable="true" ondragstart="drag(event)" id="mc" >Moyen nacré</p>
+        </div>
+        <div class="text-block" ondrop="drop(event)" ondragover="allowDrop(event)">
+          <p draggable="true" ondragstart="drag(event)" id="moircanche" >Moirée de la canche</p>
+        </div>
+        <div class="text-block" ondrop="drop(event)" ondragover="allowDrop(event)">
+          <p draggable="true" ondragstart="drag(event)" id="tircis" >Tircis</p>
+        </div>
+      </div>
+      <div class="row previews col-lg-10">
+        <div  class="col-lg-4 col-sm-6">
+          <div class="thumbnail">
+            <div class="img-overview">
+              <img class="img-ok" id="ok-hepdactyle">
+              <img class="img-responsive r-img" src="https://images.duckduckgo.com/iu/?u=http%3A%2F%2F3.bp.blogspot.com%2F-iJo_4spOLBM%2FTZBIAAYV1wI%2FAAAAAAAAABw%2FIe1YP1euJxI%2Fs1600%2FEssex%2BSkipper%2B-%2BThymelicus%2Blineola.jpg&f=1">
+            </div>
+            <div class="caption text-block" ondrop="drop(event)" ondragover="allowDrop(event)" id="t-hepdactyle"></div>
+          </div>
+        </div>
+        <div  class="col-lg-4 col-sm-6">
+          <div class="thumbnail">
+            <div class="img-overview">
+              <img class="img-ok" id="ok-mc">
+              <img class="img-responsive r-img" src="https://images.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.jbnature.com%2Fimages%2Fstories%2FSTinsectes%2FSTpapillonsdiurnes%2FSTnacres%2FSTmoyennacre%2Fmoyen%2520nacre-060913-062x6.jpg&f=1">
+            </div>
+            <div class="caption text-block" ondrop="drop(event)" ondragover="allowDrop(event)" id="t-mc"></div>
+          </div>
+        </div>
+          <div  class="col-lg-4 col-sm-6">
+            <div class="thumbnail">
+              <div class="img-overview">
+                <img class="img-ok" id="ok-tircis">
+                <img class="img-responsive r-img" src="http://www.learnaboutbutterflies.com/Pararge%20aegeria%202116-001a.jpg">
+              </div>
+              <div class="caption text-block" ondrop="drop(event)" ondragover="allowDrop(event)" id="t-tircis"></div>
+            </div>
+          </div>
+          <div  class="col-lg-4 col-sm-6">
+            <div class="thumbnail">
+              <div class="img-overview">
+                <img class="img-ok" id="ok-cvo">
+                <img class="img-responsive r-img" src="http://www.insectesduhautjura.fr/_media/img/medium/cuivre-de-la-verge-dor-male-lycaenidae-lycaena-31-juillet-2011-1.jpg">
+              </div>
+              <div class="caption text-block" ondrop="drop(event)" ondragover="allowDrop(event)" id="t-cvo"></div>
+            </div>
+          </div>
+          <div  class="col-lg-4 col-sm-6">
+            <div class="thumbnail">
+              <div class="img-overview">
+                <img class="img-ok" id="ok-dd">
+                <img class="img-responsive r-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Schachbrett%2C_f_%28Melanargia_galathea%29_0606.jpg/220px-Schachbrett%2C_f_%28Melanargia_galathea%29_0606.jpg">
+              </div>
+              <div class="caption text-block" ondrop="drop(event)" ondragover="allowDrop(event)" id="t-dd"></div>
+            </div>
+          </div>
+
+          <div  class="col-lg-4 col-sm-6">
+            <div class="thumbnail">
+              <div class="img-overview">
+                <img class="img-ok" id="ok-moircanche">
+                <img class="img-responsive r-img" src="http://www.guypadfield.com/valimages2007/epiphronV71.jpg">
+              </div>
+              <div class="caption text-block" ondrop="drop(event)" ondragover="allowDrop(event)" id="t-moircanche"></div>
+            </div>
+          </div>
+          <div  class="col-lg-4 col-sm-6">
+            <div class="thumbnail">
+              <div class="img-overview">
+                <img class="img-ok" id="ok-azc">
+                <img class="img-responsive r-img" src="https://images.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.european-lepidopteres.fr%2FIMG%2Fjpg%2FPolyommatus_icarus54.jpg&f=1">
+              </div>
+              <div class="caption text-block" ondrop="drop(event)" ondragover="allowDrop(event)" id="t-azc"></div>
+            </div>
+          </div>
+          <div  class="col-lg-4 col-sm-6">
+            <div class="thumbnail">
+              <div class="img-overview">
+                <img class="img-ok" id="ok-cephale">
+                <img class="img-responsive r-img" src="https://images.duckduckgo.com/iu/?u=http%3A%2F%2Fc1.staticflickr.com%2F7%2F6153%2F6215269392_aa0110a2b1.jpg&f=1">
+              </div>
+              <div class="caption text-block" ondrop="drop(event)" ondragover="allowDrop(event)" id="t-cephale"></div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
