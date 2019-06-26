@@ -11,6 +11,9 @@
             crossorigin=""/>
      
         <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css"/>
+        
         <style>
         #map {
             width: 100%;
@@ -28,16 +31,12 @@
             </div>
             <div class="row">
                 <div class="form-inline">
-
                     <label class="sr-only" for="input-cd_ref">cd_ref</label>
-                    <div class="input-group mb-2 mr-sm-2">
-                        <div class="input-group-prepend">
-                        <div class="input-group-text">cd_ref</div>
-                        </div>
-                        <input type="text" class="form-control" id="input-cd_ref" placeholder="(ex: 3070; 2873)">
-                    </div>
-                    <button type="submit" class="btn btn-primary mb-2" onclick="getGbifData()">Submit</button>
-                       
+                    <div class="form-group has-feedback">
+                        <input id="input-cd_ref" type="text" class="form-control" placeholder="Rechercher une espèce &nbsp; &nbsp; &nbsp;" loading="false" />
+                        <i class="glyphicon glyphicon-search form-control-feedback"></i>
+                        <input id="cd_ref" type="hidden" name="cd_ref">
+                    </div>                       
                 </div>
             </div>
             <div class="row">
@@ -81,6 +80,7 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="//stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
         
         <script>
 
@@ -105,8 +105,8 @@
                 }`;
 
 
-        function getGbifData(){
-            var cd_ref = document.getElementById('input-cd_ref').value;
+        function getGbifData(cd_ref){
+            var cd_ref = document.getElementById('cd_ref').value;
 
             makeSPARQLQuery( endpointUrl, sparqlQuery(cd_ref), function( data ) {
                     try {
@@ -210,6 +210,48 @@
                 document.getElementsByClassName("carousel-item")[0].className += " active";
             });
         }
+
+
+        /* ------------ INPN API ------------------------*/
+
+        const URL_INPN_API = "https://taxref.mnhn.fr/api/"; // taxa/autocomplete?term=poa&size=100
+
+        
+        autocompleteSearch = function(nbProposal) {
+            $("#input-cd_ref").autocomplete({
+                source: function(request, response) {
+                    var searchUrl = "taxa/autocomplete";
+                    $.get(
+                        URL_INPN_API + searchUrl,
+                        { term: request.term, size: nbProposal },
+                        function(results) {
+                            response(results._embedded.taxa)
+                        }
+                    );
+                },
+                focus: function(event, ui) {
+                    return false;
+                },
+                select: function(event, ui) {
+                    document.getElementById('cd_ref').value = ui.item.referenceId;
+                    getGbifData();
+                },
+                create: function (event,ui){
+                    $(this).data('ui-autocomplete')._renderItem = function (ul, item) {
+                        console.log(item);
+                        
+                        return $('<li>')
+                            .append('<a  class="search-bar-item">' + item.fullNameHtml + '</a>')
+                            .appendTo(ul);
+                    }
+                }
+            })
+        };
+
+        // Generate the autocompletion with the list of item, the input id and the form id
+        $("#input-cd_ref").focus(function() {
+            autocompleteSearch(20);
+        });
         </script>
     </body>
 </html>
