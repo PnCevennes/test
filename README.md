@@ -7,3 +7,6 @@ quiz rhopalo : https://pncevennes.github.io/test/quiz_rhopalo.html
 
 
 iframe geotrek event : https://pncevennes.github.io/test/geotrek_event_iframe.html
+
+
+Visualisateur des données Hubeau température : https://pncevennes.github.io/test/hubeau_temperature_viewer.html
