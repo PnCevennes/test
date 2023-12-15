@@ -166,7 +166,7 @@
   }
 
   function download() {
-    const url = `https://hubeau.eaufrance.fr/api/v1/temperature/chronique.csv?code_station=${current_station}&limit=20000&sort=asc`
+    const url = `https://hubeau.eaufrance.fr/api/v1/temperature/chronique.csv?code_station=${current_station}&limit=20000&sort=desc`
 
     // Download the CSV file
     let anchor = document.createElement('a');
@@ -214,7 +214,7 @@
       nb_pages = (nb_donnees / 10000 ) + 1
     }
 
-    fetch(`https://hubeau.eaufrance.fr/api/v1/temperature/chronique?format=json&code_station=${code_station}&sort=asc&limit=10000&page=${page}&`+ new URLSearchParams(extra_params) )
+    fetch(`https://hubeau.eaufrance.fr/api/v1/temperature/chronique?format=json&code_station=${code_station}&sort=desc&limit=10000&page=${page}&`+ new URLSearchParams(extra_params) )
       .then(response => {
         return response.json()
       })
