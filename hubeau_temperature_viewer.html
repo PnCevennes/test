@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Station température hubeau</title>
+  <title>Stations température Hub'Eau</title>
 
 </head>
 
@@ -13,7 +13,7 @@
       <a class="navbar-brand" href="index.html">
         <img src="https://cdn-icons-png.flaticon.com/512/179/179181.png" alt="" width="30" height="30"
           class="d-inline-block align-text-top">
-        Station température hubeau
+        Stations température Hub'Eau
       </a>
     </div>
   </nav>
@@ -28,11 +28,15 @@
           <div class="spinner-grow text-primary" role="status">
             <span class="visually-hidden">Loading...</span>
           </div>
-          <b>Stations température de hubeau en cours de chargement</b>
+          <b>Stations température de Hub'Eau en cours de chargement...</b>
         </div>
         <div  id="loaded-station"  style="display: none;">
         <h1>Détail station</h1>
-        <div>Cliquer sur une station pour récupérer le détail des températures</div>
+        <div>Cliquer sur une station pour afficher le détail de ses températures.</div>
+        <div>Les stations et leurs données sont récupérées automatiquement à partir de l'API 
+                <a href="https://hubeau.eaufrance.fr/page/api-temperature-continu" target="_blank">"Température des cours d'eau"</a> 
+                de <a href="https://hubeau.eaufrance.fr/page/api-temperature-continu" target="_blank">Hub'Eau</a>.
+	</div>
         <div id="station-detail"></div>
         <div class="form" id="form-graph"  style="display: none;">
           <div class="form-group row">
@@ -47,8 +51,8 @@
             <label for="inputEmail3" class="col-sm-2 col-form-label">Nombre de données</label>
           <input type="number" id="nb_donnees" name="nb-donnees" value="10000" class="form-control"/>
           </div>
-          <button type="submit" class="btn btn-primary" onclick="generateGraph()">Regénérer graphique</button>
-          <button type="submit" class="btn btn-primary" onclick="download()">Télécharger données</button>
+          <button type="submit" class="btn btn-primary" onclick="generateGraph()">Regénérer le graphique</button>
+          <button type="submit" class="btn btn-primary" onclick="download()">Télécharger les données</button>
         </div>
         <div id="graph-temp"></div>
         <div class="d-flex justify-content-center">
